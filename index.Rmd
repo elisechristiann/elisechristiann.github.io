@@ -1,17 +1,30 @@
 ---
-title: "Elise's Projects"
-output: html_document
+title: "Elise's Website or something"
 date: "`r Sys.Date()`"
+output: tufte::tufte_html
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(tufte)
+library(knitr)
 ```
 
-## About Me and Research | [Project](./project/final_project.html) ##
+## [About Me and Research](./aboutme/aboutmeandresearch.html) | [Project](./Project/final_project.html) ##
 
-This is my project
+# Cool science stuff and an even cooler person #
+
+Born and raised in Salt Lake City, UT. 
+I've hiked almost every trail in the valley. 
+_There isn't much else to do._
+
+```{r, out.width="75%", echo=FALSE}
+knitr::include_graphics("./pics/IMG_0647.jpeg")
+```
+
+I (almost) have a degree in biotechnology.
+
 
 
 
