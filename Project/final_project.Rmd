@@ -1,31 +1,66 @@
 ---
-title: "Effectors_project"
-output: html_document
+title: "Effector's Project"
+output: tufte::tufte_html
 date: "`r Sys.Date()`"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(tufte)
+library(knitr)
 ```
 
-## R Markdown
+[Return to Homepage](../index.html)
 
-[Return to Homepage](./index.html)
+# The inspiration for this project #
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## My good friends from Purdue ##
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r,out.width="75%", echo=FALSE}
+knitr::include_graphics("./IMG_1886.jpeg")
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+I spent the Summer of 2024 in a small town in Indiana killing plants. I worked at Purdue University (Go Boilermakers!) in the plant pathology department. There, I had the pleasure of working in Dr. Anjali Iyer-Pascuzzi's Lab with my mentor, Abbie. Her lab specializes in characterizing and analyzing _Ralstonia solanacearum_ which is a pathogenic bacterium that causes damage to potatoes, tomatoes, and geraniums. I learned how to do colonization assays, plant infiltrations, and ROS assays to determine how certain effectors within _Ralstonia_ work. Effectors are proteins that are injected into a host organism to create more favorable colonization conditions. My interest in effectors did not end when I returned to Utah.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+## My lab ##
+
+```{r, out.width="75%", echo=FALSE}
+
+knitr::include_graphics("./IMG_6962.jpeg")
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+The best part about _Ralstonia_ is that, in certain media, it has a Barbie Pink color:
+
+```{r, out.width="75%", echo=FALSE}
+knitr::include_graphics("./IMG_1717.jpeg")
+
+```
+
+With all that sentimental stuff done, here is the project:
+
+## The Project ##
+
+There are A LOT of different effectors within _Ralstonia solanacearum_. T
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
