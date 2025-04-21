@@ -1,0 +1,23 @@
+---
+title: "About Me and Research"
+output: tufte::tufte_html
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## R Markdown
+
+[Return to Homepage](../index.html) 
+
+
+```{r}
+
+
+```
+
+
+
