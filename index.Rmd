@@ -16,14 +16,13 @@ library(knitr)
 # Cool science stuff and an even cooler person #
 
 Born and raised in Salt Lake City, UT. 
-I've hiked almost every trail in the valley. 
-_There isn't much else to do._
+I've hiked almost every trail in the valley. ^[There isn't much else to do.]
 
 ```{r, out.width="75%", echo=FALSE}
 knitr::include_graphics("./pics/IMG_0647.jpeg")
 ```
 
-I (almost) have a degree in biotechnology.
+
 
 
 
