@@ -11,12 +11,12 @@ library(tufte)
 library(knitr)
 ```
 
-## [About Me and Research](./aboutme/aboutmeandresearch.html) | [Project](./Project/final_project.html) ##
+## [About Me and Research](./aboutme/aboutmeandresearch.html) | [Project](./Project/final_project.html) | [CV](./CV_EB_2024.pdf) ##
 
 # Cool science stuff and an even cooler person #
 
-Born and raised in Salt Lake City, UT. 
-I've hiked almost every trail in the valley. ^[There isn't much else to do.]
+Based in Salt Lake City, UT. 
+
 
 ```{r, out.width="75%", echo=FALSE}
 knitr::include_graphics("./pics/IMG_0647.jpeg")
