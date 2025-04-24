@@ -1,6 +1,6 @@
 ---
 title: "Ralstonia Effectors Project"
-output: tufte::tufte_html
+output: tufte::tufte_html 
 date: "`r Sys.Date()`"
 ---
 
@@ -14,6 +14,9 @@ library(rentrez)
 library(seqinr)
 library(ggmsa)
 library(Biostrings)
+library(DECIPHER)
+library(ggtree)
+library(plotly)
 ```
 
 [Return to Homepage](../index.html)
@@ -120,10 +123,11 @@ sequences <- read.FASTA("ralproteins.fasta", type="AA")
 names_df <- data.frame(accession = names(sequences))
 #merge tables to find where differences and get rid of different ones
 merged_df <- merge(names_df, ral_df, by = "accession", all.x = TRUE)
-# new names
-merged_df$new_name <- paste0(merged_df$description, "_", seq_len(nrow(merged_df)))
+merged_df$fullname <- paste(merged_df$name, merged_df$`#Species`)
 # renamed sequences
-names(sequences) <- merged_df$new_name
+names(sequences) <- merged_df$fullname
+#saved the renamed sequences
+write.fasta(sequences, names = names(sequences), file.out = "ral_fullname.fasta")
 ```
 At last, we can move on.^[Most of these were NOT problems I thought about. Consider this in the future]
 
@@ -134,7 +138,7 @@ I will need to break up the Rip proteins quite a bit to get my computer to run a
 
 Here is an small preview of an alignment for the RipU proteins from different species:^[Labels for sequences are missing because they simply did not fit, my bad]
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 sequences <- readAAStringSet("ral_renamed.fasta")
 subset_sequences <- sequences[grep("RipU", names(sequences))]
 
@@ -147,32 +151,62 @@ In starting the alignment, different proteins need to be compared across the dif
 
 ## Building the tree ##
 
-For RipU, here is the tree that was generated using the following code:^[The tree labels show the specific RipU but not the species it was from]
+For RipU, here is a small tree to show the connections of this effector within different bacterial strains. ^[RipU is close to my heart since I worked with it so much]
 
-```{r}
-#alignment of RipU
-alignment_ripU <- msa(subset_sequences, method="Muscle", type="protein" )
-#  AAStringSet
-alignment_aa_ripU <- msaConvert(alignment_ripU, type = "ape::AAbin")
-alignment_char_ripU <- as.character(alignment_aa_ripU)
-alignment_strings_ripU <- sapply(alignment_char_ripU, paste0, collapse = "")
-alignment_AAStringSet_ripU <- AAStringSet(alignment_strings_ripU)
-#so it works with phangorn
-phang_align_ripU <- phyDat(alignment_aa_ripU, type = "AA")
-dm <- dist.ml(phang_align_ripU)
-#making a tree
-treeNJ <- NJ(dm)
-fit <- pml(treeNJ, phang_align_ripU)
-fit_optimized <- optim.pml(fit, model = "JTT")
-plot(fit_optimized$tree, main = "Phylogenetic Tree")
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#for RipU
+sequences <- readAAStringSet("ral_fullname.fasta")
+#keep sequences with "ripU"
+subset_sequences <- sequences[grep("ripU", names(sequences))]
+#align 
+alignRipU <- AlignSeqs(subset_sequences)
+#tree
+DRipU <- DistanceMatrix(subset_sequences, correction="none", # choose a model
+                        type="dist",
+                        processors=NULL) # use all CPUs )
+tree_ripU <- Treeline(myDistMatrix=DRipU,
+                      method="ME",
+                      showPlot=FALSE,
+                      processors=NULL)
+ggtree(tree_ripU)+ geom_tiplab(size = 5) + geom_treescale()
 ```
 
+Now let's make this better. Here is another chart with all of the "ripA" effectors. These effectors serve multiple purposes in suppressing transcription factors, altering pathways, and destroys the structure of microtubules.
+
+```{r, message=FALSE, warning=FALSE}
+#for all effectors
+sequences_all <- readAAStringSet("ral_fullnamereal.fasta")
+subset_sequencesripA <- sequences_all[grep("ripA", names(sequences_all))]
 
 
+#aligning
+alignRipA <- AlignSeqs(subset_sequencesripA)
+#tree
+allripA <- DistanceMatrix(subset_sequencesripA, correction="none", # choose a model
+                        type="dist",
+                        processors=NULL) # use all CPUs )
+tree_rips <- Treeline(myDistMatrix=allripA,
+                      method="ME",
+                      showPlot=FALSE,
+                      processors=NULL)
+interactivetreeA <- ggtree(tree_rips)+ geom_tiplab() 
+#fun tree for people who like to click on things
+ggplotly(interactivetreeA) %>% plotly::add_text(data = interactivetreeA$data,  x = ~x,  y = ~y,  text = ~label,  textposition = 'right', size=1)
 
+```
 
+## Some very vague conclusions ##
 
+_Ralstonia solanacearum_ is found on all continents. As crops move, this bacteria has the potential to spread throughout and diversify. Some strains are event becoming cold resistant and they are able to survive in new climates. Building a  phylogenetic tree allows us to investigate where strains are evolving from and how they can be prevented from moving forward.
 
+## If I could do this again ##
+I would not melt my computer trying to make a really big tree even though it would've been really cool.
+
+```{r,echo=FALSE}
+knitr::include_graphics("./coolpic.jpeg")
+```
+
+[Return to Homepage](../index.html)
 
 
 

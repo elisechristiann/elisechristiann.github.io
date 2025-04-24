@@ -8,6 +8,7 @@ library(ggmsa)
 library(Biostrings)
 library(janitor)
 
+
 #getting the sequences from NCBI
 
 effect <- read_csv("effectors_entire_spreadsheet.csv")
@@ -74,6 +75,9 @@ names(sequences) <- merged_df$new_name
 #saved the renamed sequences
 write.fasta(sequences, names = names(sequences), file.out = "ral_renamed.fasta")
 
+#making a list of RipU proteins
+
+
 #wow that's a big file, let's select a few Rip proteins to look into
 
 #some instructions from google on how the heck to subset a fasta file
@@ -115,7 +119,7 @@ phang_align_ripU <- phyDat(alignment_aa, type = "AA")
 
 dm <- dist.ml(phang_align_ripU)
 
-#making a tree???
+#making a tree for RipU???
 treeNJ <- NJ(dm)
 fit <- pml(treeNJ, phang_align_ripU)
 fit_optimized <- optim.pml(fit, model = "JTT")
@@ -124,7 +128,8 @@ plot(fit_optimized$tree, main = "Phylogenetic Tree")
 
 
 
+#tip labels change- not in FASTA -
+tip.label
 
-
-
+#DECIPHER - 
 
