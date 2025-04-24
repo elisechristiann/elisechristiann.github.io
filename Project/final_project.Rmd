@@ -153,7 +153,7 @@ In starting the alignment, different proteins need to be compared across the dif
 
 For RipU, here is a small tree to show the connections of this effector within different bacterial strains. ^[RipU is close to my heart since I worked with it so much]
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 #for RipU
 sequences <- readAAStringSet("ral_fullname.fasta")
 #keep sequences with "ripU"
@@ -168,12 +168,35 @@ tree_ripU <- Treeline(myDistMatrix=DRipU,
                       method="ME",
                       showPlot=FALSE,
                       processors=NULL)
+```
+
+The code:
+```{r, eval=FALSE}
+#for RipU
+sequences <- readAAStringSet("ral_fullname.fasta")
+#keep sequences with "ripU"
+subset_sequences <- sequences[grep("ripU", names(sequences))]
+#align 
+alignRipU <- AlignSeqs(subset_sequences)
+#tree
+DRipU <- DistanceMatrix(subset_sequences, correction="none", # choose a model
+                        type="dist",
+                        processors=NULL) # use all CPUs )
+tree_ripU <- Treeline(myDistMatrix=DRipU,
+                      method="ME",
+                      showPlot=FALSE,
+                      processors=NULL)
+```
+
+A pretty plot:
+```{r, echo=FALSE}
 ggtree(tree_ripU)+ geom_tiplab(size = 5) + geom_treescale()
 ```
 
-Now let's make this better. Here is another chart with all of the "ripA" effectors. These effectors serve multiple purposes in suppressing transcription factors, altering pathways, and destroys the structure of microtubules.
 
-```{r, message=FALSE, warning=FALSE}
+Now let's make this better. Here is another chart with all of the "ripA" effectors. These effectors serve multiple purposes in suppressing transcription factors, altering pathways, and destroys the structure of microtubules.^[This uses the same process as above so I did not include the code]
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
 #for all effectors
 sequences_all <- readAAStringSet("ral_fullnamereal.fasta")
 subset_sequencesripA <- sequences_all[grep("ripA", names(sequences_all))]
@@ -190,10 +213,16 @@ tree_rips <- Treeline(myDistMatrix=allripA,
                       showPlot=FALSE,
                       processors=NULL)
 interactivetreeA <- ggtree(tree_rips)+ geom_tiplab() 
+
+```
+
+```{r, echo=FALSE}
 #fun tree for people who like to click on things
 ggplotly(interactivetreeA) %>% plotly::add_text(data = interactivetreeA$data,  x = ~x,  y = ~y,  text = ~label,  textposition = 'right', size=1)
 
 ```
+
+
 
 ## Some very vague conclusions ##
 
